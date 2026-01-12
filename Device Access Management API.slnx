@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Device Access Management API/Device Access Management API.csproj" />
+  <Project Path="Domain/Domain.csproj" />
+  <Project Path="Infrastructure/Infrastructure.csproj" />
+  <Project Path="Services/Services.csproj" />
+</Solution>
