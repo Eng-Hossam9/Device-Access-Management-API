@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Commands.Devices.Commands.Handler
+namespace Services.Commands.Devices.Handler
 {
     public class CreateDeviceHandler: IRequestHandler<CreateDeviceCommand, Guid>
     {

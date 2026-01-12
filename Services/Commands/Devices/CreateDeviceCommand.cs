@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Commands.Devices.Commands
+namespace Services.Commands.Devices
 {
     public class CreateDeviceCommand : IRequest<Guid>
     {

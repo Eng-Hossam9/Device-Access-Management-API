@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Services.Commands.Devices.Commands;
+using Services.Commands.Devices;
 using Services.Queries;
 
 namespace Device_Access_Management_API.Controllers
