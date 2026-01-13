@@ -1,9 +1,11 @@
-
+﻿
 using Device_Access_Management_API.ExecptionHandler;
 using FluentValidation;
 using Infrastructure.Persistence_Context;
 using Infrastructure.Repositories;
 using MediatR;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Services.Commands.Devices.Handler;
@@ -11,9 +13,7 @@ using Services.InterFaces;
 using Services.Services;
 using Services.ValidationBehavior;
 using Services.Validations;
-using System.Reflection;
-using System.Security.Cryptography;
-using static System.Net.Mime.MediaTypeNames;
+
 
 namespace Device_Access_Management_API
 {
@@ -34,6 +34,11 @@ namespace Device_Access_Management_API
             builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             builder.Services.AddScoped(typeof(IRepositoryEntityBase<,>),typeof(RepositoryEntityBase<,>));
             builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
             {
@@ -45,7 +50,34 @@ namespace Device_Access_Management_API
 
             app.UseAuthorization();
 
-            app.UseMiddleware<ExceptionMiddleware>();
+            app.UseExceptionHandler(appError =>
+            {
+                appError.Run(async context =>
+                {
+                    context.Response.ContentType = "application/json";
+
+                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+                    if (contextFeature != null)
+                    {
+                        int statusCode = contextFeature.Error switch
+                        {
+                            ArgumentNullException => 400,
+                            KeyNotFoundException => 404,
+                            _ => 500
+                        };
+
+                        var response = new ApiResponse<object>
+                        (
+                            data: null,
+                            success: false,
+                            message: contextFeature.Error.Message
+                        );
+
+                        context.Response.StatusCode = statusCode;
+                        await context.Response.WriteAsJsonAsync(response);
+                    }
+                });
+            });
 
 
             app.MapControllers();
