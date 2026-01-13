@@ -1,4 +1,5 @@
 
+using Device_Access_Management_API.ExecptionHandler;
 using FluentValidation;
 using Infrastructure.Persistence_Context;
 using Infrastructure.Repositories;
@@ -6,7 +7,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Services.Commands.Devices.Handler;
-using Services.ExecptionHandler;
 using Services.InterFaces;
 using Services.Services;
 using Services.ValidationBehavior;
