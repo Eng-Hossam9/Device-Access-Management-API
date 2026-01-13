@@ -1,6 +1,5 @@
 ﻿using Domain.Entities;
 using Infrastructure.Repositories;
-using Infrastructure.Repositories.Devices;
 using MediatR;
 using Services.InterFaces;
 using System;
@@ -27,6 +26,8 @@ namespace Services.Commands.Devices.Handler
             await _unitOfWork.Commit();
             return device.Id;
         }
+
+
     }
 
 }

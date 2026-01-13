@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Services.Commands.Devices.Handler;
+using Services.ExecptionHandler;
 using Services.InterFaces;
 using Services.Services;
 using Services.ValidationBehavior;
@@ -43,6 +44,8 @@ namespace Device_Access_Management_API
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
 
             app.MapControllers();

@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="Device Access Management API/Device Access Management API.csproj" />
+  <Project Path="DeviceAccessMangement.Test/DeviceAccessMangement.Test.csproj" Id="498b3b52-9c00-4378-a54b-9d5c3cea0de7" />
   <Project Path="Domain/Domain.csproj" />
   <Project Path="Infrastructure/Infrastructure.csproj" />
   <Project Path="Services/Services.csproj" />

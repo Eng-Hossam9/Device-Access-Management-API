@@ -19,7 +19,9 @@ namespace Services.Queries.Devices.Handler
         }
         public async Task<Domain.Entities.Devices> Handle(GetDeviceByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _unitOfWork.Repository<Guid, Domain.Entities.Devices>().GetByIdAsync(request.Id);
+           var  device= await _unitOfWork.Repository<Guid, Domain.Entities.Devices>().GetByIdAsync(request.Id);
+    
+            return device;
 
         }
     }

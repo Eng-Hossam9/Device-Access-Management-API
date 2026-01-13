@@ -8,7 +8,7 @@ namespace Domain.Entities
 {
     public class Devices: DBClass<Guid>
     {
-        public Guid Id { get; private set; }
+        public Guid Id { get;  private set; }
         public string Name { get; private set; }
         public bool IsActive { get; private set; }
 
@@ -21,6 +21,12 @@ namespace Domain.Entities
         public void Deactivate()
         {
             IsActive = false;
+        }
+        public Devices(string name,Guid deviceid)
+        {
+            Id = deviceid;
+            Name = name;
+            IsActive = true;
         }
     }
 
