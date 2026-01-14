@@ -9,8 +9,8 @@ namespace Domain.Entities
     public class Devices: DBClass<Guid>
     {
         public Guid Id { get;  private set; }
-        public string Name { get; private set; }
-        public bool IsActive { get; private set; }
+        public string Name { get;  set; }
+        public bool IsActive { get;  set; }
 
         public Devices(string name)
         {

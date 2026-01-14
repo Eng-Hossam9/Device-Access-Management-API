@@ -18,7 +18,7 @@ namespace Device_Access_Management_API.Controllers
         {
             _mediator = mediator;
         }
-        [HttpPost]
+        [HttpPost("AddNewDevice")]
         public async Task<IActionResult> AddDevice([FromBody] CreateDeviceCommand command)
         {
             try
@@ -80,6 +80,26 @@ namespace Device_Access_Management_API.Controllers
                          data: null,
                          success: false,
                          message: ex.Message));
+            }
+        }
+        [HttpPost("UpdateDevice")]
+        public async Task<IActionResult> UpdateDevice([FromBody] UpdateDeviceCommand command)
+        {
+            try
+            {
+                var Device = await _mediator.Send(command);
+                return Ok(new ApiResponse<object>(
+                    data: new { Device },
+                    message: "Device Updated Successfuly ",
+                    success: true
+                ));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<object>(
+                data: null,
+                success: false,
+                message: ex.Message));
             }
         }
     }
