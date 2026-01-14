@@ -1,5 +1,6 @@
 ﻿
 using Device_Access_Management_API.ExecptionHandler;
+using Domain.Entities;
 using FluentValidation;
 using Infrastructure.Persistence_Context;
 using Infrastructure.Repositories;
@@ -8,11 +9,15 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Services.Commands.Devices.Handler;
 using Services.InterFaces;
+using Services.Mapping;
 using Services.Services;
 using Services.ValidationBehavior;
 using Services.Validations;
+using System.Reflection;
 
 
 namespace Device_Access_Management_API
@@ -34,11 +39,15 @@ namespace Device_Access_Management_API
             builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             builder.Services.AddScoped(typeof(IRepositoryEntityBase<,>),typeof(RepositoryEntityBase<,>));
             builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+            builder.Services.AddAutoMapper(m => m.AddProfile(new DeviceProfile()));
 
             builder.Services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+
+
+
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
             {

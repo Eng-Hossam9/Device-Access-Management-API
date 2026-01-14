@@ -38,6 +38,7 @@ namespace Device_Access_Management_API.Controllers
              message: ex.Message));
             }
         }
+
         [HttpPost("GetDeviceById")]
         public async Task<IActionResult> GetDeviceById([FromBody] GetDeviceByIdQuery Query)
         {
@@ -52,6 +53,28 @@ namespace Device_Access_Management_API.Controllers
 
             }
             catch(Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<object>(
+                         data: null,
+                         success: false,
+                         message: ex.Message));
+            }
+        }
+
+        [HttpGet("GetAllDevices")]
+        public async Task<IActionResult> GetAllDevices()
+        {
+            try
+            {
+                var Device = await _mediator.Send(new GetAllDevicesQuery());
+                return Ok(new ApiResponse<object>(
+                                  data: new { Device },
+                                  message: "Devices retrieved",
+                                  success: true
+                              ));
+
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, new ApiResponse<object>(
                          data: null,
