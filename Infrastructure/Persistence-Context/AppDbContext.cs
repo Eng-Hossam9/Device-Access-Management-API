@@ -15,6 +15,7 @@ namespace Infrastructure.Persistence_Context
 
         }
         public DbSet<Devices> Devices { get; set; }
+        public DbSet<Users> Users { get; set; }
 
     }
 }

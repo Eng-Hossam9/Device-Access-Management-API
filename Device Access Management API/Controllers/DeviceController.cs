@@ -9,33 +9,26 @@ using Services.Queries;
 namespace Device_Access_Management_API.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    public class DeviceController : ControllerBase
+    public class DeviceController : BaseController
     {
-        private readonly IMediator _mediator;
 
-        public DeviceController(IMediator mediator)
+        public DeviceController(IMediator mediator):base(mediator)
         {
-            _mediator = mediator;
         }
         [HttpPost("AddNewDevice")]
         public async Task<IActionResult> AddDevice([FromBody] CreateDeviceCommand command)
         {
             try
             {
-                var deviceId = await _mediator.Send(command);
-                return Ok( new ApiResponse<object>(
-                    data: new { deviceId },
-                    message: "Device Added Successfuly and deviceId Info retrieved",
-                    success: true
-                ));
+
+                var deviceId = await _Mediator.Send(command);
+                return Success(new { deviceId }, "Device Added Successfully");
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-             return StatusCode(500, new ApiResponse<object>(
-             data: null,
-             success: false,
-             message: ex.Message));
+                return Fail(ex.Message);
+
             }
         }
 
@@ -44,20 +37,15 @@ namespace Device_Access_Management_API.Controllers
         {
             try
             {
-                var Device = await _mediator.Send(Query);
-                return Ok(new ApiResponse<object>(
-                                  data: new { Device },
-                                  message: "Device Info retrieved",
-                                  success: true
-                              ));
+                var Device = await _Mediator.Send(Query);
+                return Success(new { Device }, "Device Added Successfully");
+
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return StatusCode(500, new ApiResponse<object>(
-                         data: null,
-                         success: false,
-                         message: ex.Message));
+                return Fail(ex.Message);
+
             }
         }
 
@@ -66,40 +54,32 @@ namespace Device_Access_Management_API.Controllers
         {
             try
             {
-                var Device = await _mediator.Send(new GetAllDevicesQuery());
-                return Ok(new ApiResponse<object>(
-                                  data: new { Device },
-                                  message: "Devices retrieved",
-                                  success: true
-                              ));
+                var Device = await _Mediator.Send(new GetAllDevicesQuery());
+          
+                return Success(new { Device }, "Devices retrieved");
 
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new ApiResponse<object>(
-                         data: null,
-                         success: false,
-                         message: ex.Message));
+                return Fail(ex.Message);
+
             }
         }
+
         [HttpPost("UpdateDevice")]
         public async Task<IActionResult> UpdateDevice([FromBody] UpdateDeviceCommand command)
         {
             try
             {
-                var Device = await _mediator.Send(command);
-                return Ok(new ApiResponse<object>(
-                    data: new { Device },
-                    message: "Device Updated Successfuly ",
-                    success: true
-                ));
+                var Device = await _Mediator.Send(command);
+
+                return Success(new { Device }, "Device Updated Successfuly");
+                
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new ApiResponse<object>(
-                data: null,
-                success: false,
-                message: ex.Message));
+                return Fail(ex.Message);
+
             }
         }
     }
