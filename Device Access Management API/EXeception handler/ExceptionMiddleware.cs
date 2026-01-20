@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Authentication;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -29,6 +30,11 @@ namespace Device_Access_Management_API.ExecptionHandler
             {
                 await WriteError(context, ex.Message, HttpStatusCode.NotFound);
             }
+            catch (AuthenticationException ex)
+            {
+                await WriteError(context, ex.Message, HttpStatusCode.NotFound);
+            }
+         
             catch (BadRequestException ex)
             {
                 await WriteError(context, ex.Message, HttpStatusCode.BadRequest);
@@ -49,10 +55,7 @@ namespace Device_Access_Management_API.ExecptionHandler
             }
         }
 
-        private static async Task WriteError(
-            HttpContext context,
-            string message,
-            HttpStatusCode statusCode)
+        private static async Task WriteError(HttpContext context,string message,HttpStatusCode statusCode)
         {
             context.Response.StatusCode = (int)statusCode;
             context.Response.ContentType = "application/json";

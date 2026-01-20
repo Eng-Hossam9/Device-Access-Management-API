@@ -8,7 +8,6 @@ namespace Domain.Entities
 {
     public class Devices: DBClass<Guid>
     {
-        public Guid Id { get;  private set; }
         public string Name { get;  set; }
         public bool IsActive { get;  set; }
 

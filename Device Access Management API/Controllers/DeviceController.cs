@@ -1,6 +1,7 @@
 ﻿using Device_Access_Management_API.ExecptionHandler;
 using Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Commands.Devices;
@@ -8,6 +9,8 @@ using Services.Queries;
 
 namespace Device_Access_Management_API.Controllers
 {
+    [Authorize]
+
     [Route("api/[controller]")]
     public class DeviceController : BaseController
     {
